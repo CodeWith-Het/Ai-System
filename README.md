@@ -1,97 +1,170 @@
-# 🛡️ VisionGuard: Smart Real-Time Exam Monitoring System
+🛡️ VisionGuard — Smart Real-Time Exam Monitoring System
 
-VisionGuard is an advanced AI-powered proctoring solution designed to maintain examination integrity. By combining computer vision (**YOLOv8 & OpenCV**) with a robust real-time web interface (**MERN Stack & Socket.io**), the system automatically detects exam violations and flags specific student seats on a live supervisor dashboard.
+An AI-powered proctoring solution that ensures examination integrity using Computer Vision, Real-Time Streaming, and Live Seat-Based Monitoring.
 
----
+📌 Overview
 
-## ✨ Key Features
+VisionGuard is an advanced smart examination monitoring system designed to detect and prevent cheating activities in real time.
+The platform combines YOLOv8, OpenCV, and YOLOv8-pose with a powerful MERN Stack dashboard to provide supervisors with live alerts and automated violation tracking.
 
-* **Real-Time Live Monitoring:** Low-latency video streaming integrated with advanced AI detection models.
-* **Prohibited Object Detection:** Automatically detects mobile phones and books, drawing red bounding boxes around them.
-* **Paper Passing (Hand Proximity) Detection:** Utilizes **YOLOv8-pose** to track wrists and draws a yellow line when hands meet between different students, instantly flagging collusion.
-* **Dynamic Seat Layout:** Supervisors can configure the classroom grid dynamically from the dashboard.
-* **Targeted Alerts:** Uses coordinate-based matching to ensure that only the specific seat committing the violation is turned red.
-* **Secure Access Control:** Fully secure Supervisor portal protected by JWT (JSON Web Tokens) and Bcrypt password hashing.
+The system identifies:
 
----
+📱 Mobile phone usage
+📚 Unauthorized books/materials
+🤝 Paper passing & suspicious hand interactions
+🚨 Seat-specific cheating alerts
 
-## 🛠️ Tech Stack
+All detected violations are highlighted instantly on the supervisor dashboard using a dynamic seat-mapping system.
 
-* **Frontend:** React.js, Tailwind CSS, React Router Dom
-* **Backend:** Node.js, Express.js, Flask (Python)
-* **AI & Vision:** Python, YOLOv8, YOLOv8-pose, OpenCV
-* **Database:** MongoDB Atlas
-* **Real-time Sync:** Socket.io (WebSockets)
-* **Security:** JWT, Bcrypt
+✨ Features
+🎥 Real-Time Monitoring
+Live low-latency video streaming
+Continuous AI-based surveillance
+Real-time dashboard updates using Socket.io
+📱 Prohibited Object Detection
 
----
+Detects:
 
-## 📂 Project Structure
+Mobile Phones
+Books / Notes
 
-```text
+Violations are highlighted with:
+
+🔴 Red Bounding Boxes
+🚨 Instant Supervisor Alerts
+🤝 Hand Proximity / Paper Passing Detection
+
+Using YOLOv8-pose, the system:
+
+Tracks wrist keypoints
+Detects suspicious hand interactions between students
+Draws a 🟡 Yellow Line when hands overlap across seats
+
+🪑 Dynamic Seat Layout
+Configurable classroom grid
+Flexible seat arrangement from supervisor dashboard
+Real-time seat status updates
+
+🎯 Targeted Seat Alerts
+Coordinate-based violation mapping
+Only the specific violating seat turns red
+Prevents false-positive classroom alerts
+
+🔐 Secure Authentication
+JWT-based authentication
+Bcrypt password hashing
+Protected Supervisor Dashboard
+
+🛠️ Tech Stack
+| Category                | Technologies                             |
+| ----------------------- | ---------------------------------------- |
+| Frontend                | React.js, Tailwind CSS, React Router DOM |
+| Backend                 | Node.js, Express.js, Flask               |
+| AI & Vision             | Python, YOLOv8, YOLOv8-pose, OpenCV      |
+| Database                | MongoDB Atlas                            |
+| Real-Time Communication | Socket.io (WebSockets)                   |
+| Security                | JWT, Bcrypt                              |
+
+📂 Project Structure
 VisionGuard/
-├── backend/            # Node.js + Express Server
-│   ├── models/        # MongoDB Schemas
-│   ├── server.js      # Core entry point & Auth APIs
-│   └── .env           # Environment Variables (MONGO_URI, JWT_SECRET)
-├── frontend/           # React + Tailwind Dashboard
+│
+├── backend/                 # Node.js + Express Backend
+│   ├── models/              # MongoDB Schemas
+│   ├── routes/              # Authentication & APIs
+│   ├── middleware/          # JWT Verification Middleware
+│   ├── server.js            # Main Backend Entry Point
+│   └── .env                 # Environment Variables
+│
+├── frontend/                # React + Tailwind Frontend
 │   ├── src/
-│   │   ├── components/# Auth, CameraFeed, SeatGrid, AlertBox
-│   │   └── App.jsx    # Application Routing & Socket Management
+│   │   ├── components/      # UI Components
+│   │   ├── pages/           # Application Pages
+│   │   ├── services/        # API & Socket Services
+│   │   └── App.jsx          # Main Routing File
 │   └── package.json
-└── Ai-Model/           # Python AI Proctoring Engine
-    └── main.py        # YOLOv8 Inference, OpenCV Pipeline & Flask Server
-```
-
+│
+└── Ai-Model/                # AI Detection Engine
+    ├── models/              # YOLO Model Weights
+    ├── utils/               # Detection Utilities
+    └── main.py              # OpenCV + YOLOv8 Pipeline
+    
 🚀 Getting Started
-1. Backend Setup
-Navigate to the backend folder:
 
-Bash
+1️⃣ Clone Repository
+git clone <your-repository-url>
+cd VisionGuard
+
+⚙️ Backend Setup
+Navigate to Backend Folder
 cd backend
-Install dependencies:
-
-Bash
+Install Dependencies
 npm install
-Create a .env file inside the backend directory:
-
-Code snippet
+Create .env File
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 PORT=5000
-Start the server:
-
-Bash
+Start Backend Server
 node server.js
-2. Frontend Setup
-Navigate to the frontend folder:
 
-Bash
+Server runs on:
+
+http://localhost:5000
+
+🎨 Frontend Setup
+Navigate to Frontend Folder
 cd ../frontend
-Install dependencies:
-
-Bash
+Install Dependencies
 npm install
-Start the Vite development server:
-
-Bash
+Start Development Server
 npm run dev
-3. AI Model Setup
-Navigate to the Ai-Model folder:
 
-Bash
+Frontend runs on:
+
+http://localhost:5173
+🤖 AI Model Setup
+Navigate to AI Model Folder
 cd ../Ai-Model
-Install required Python packages:
-
-Bash
+Install Python Dependencies
 pip install ultralytics opencv-python flask flask-cors python-socketio numpy
-Run the AI proctoring engine:
-
-Bash
+Run AI Engine
 python main.py
-🔒 Security & Testing
-Authentication: Passwords are securely hashed via bcryptjs before database storage.
 
-API Testing: Verified via Postman for robust error handling during registration and login workflows.
+🔄 System Workflow
+Camera Feed
+      ↓
+OpenCV Video Processing
+      ↓
+YOLOv8 / YOLOv8-pose Detection
+      ↓
+Violation Detection Logic
+      ↓
+Socket.io Real-Time Event
+      ↓
+Supervisor Dashboard Alert
 
-WebSocket Monitoring: Debugged using Chrome DevTools network tracing to maintain zero latency for cheating_alert signals.
+🚨 Detection Types
+| Detection              | Description                       |
+| ---------------------- | --------------------------------- |
+| Mobile Detection       | Detects mobile phone usage        |
+| Book Detection         | Detects books or notes            |
+| Hand Interaction       | Detects suspicious hand proximity |
+| Seat Violation Mapping | Highlights only violating seat    |
+
+🔒 Security & Authentication
+Authentication
+Secure login system using JWT
+Password hashing using bcryptjs
+API Testing
+Tested using Postman
+Proper error handling implemented
+Real-Time Monitoring
+Socket.io events debugged using Chrome DevTools
+Optimized for minimal alert latency
+
+📸 Future Enhancements
+🎙️ Voice Detection
+😴 Drowsiness Detection
+👀 Eye Tracking
+🧠 Behavior Analysis
+☁️ Cloud Deployment
+📊 Exam Analytics Dashboard
