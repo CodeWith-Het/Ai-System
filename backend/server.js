@@ -1,5 +1,4 @@
 const path = require("path");
-// 🛠️ PATH FIX: Yeh line ab absolute path se .env load karegi
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const express = require("express");
@@ -39,18 +38,19 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
+// 🛠️ Model ka naam Capital 'User' kiya
 const User = mongoose.model("User", userSchema);
 
 // --- 3. AUTH APIs ---
 app.post("/api/signup", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email }); // 🛠️ Capital User
     if (existingUser)
       return res.status(400).json({ message: "User already exists!" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hashedPassword });
+    const newUser = new User({ email, password: hashedPassword }); // 🛠️ Capital User
     await newUser.save();
 
     res
@@ -65,7 +65,7 @@ app.post("/api/signup", async (req, res) => {
 app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }); // 🛠️ Capital User model se search kiya
     if (!user)
       return res.status(400).json({ message: "Invalid email or password!" });
 
